@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل دی‌ان‌اس</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, button, select {
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            max-width: 400px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        pre {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>پنل ساخت دی‌ان‌اس</h1>
+    
+    <label for="sim-type">نوع سیم‌کارت را انتخاب کنید:</label>
+    <select id="sim-type">
+        <option value="Irancell">ایرانسل</option>
+        <option value="Hamrah Aval">همراه اول</option>
+    </select>
+    
+    <label for="power-level">سطح قدرت را تنظیم کنید:</label>
+    <input type="range" id="power-level" min="0" max="100" value="50">
+    
+    <label for="dns-count">تعداد کدهای دی‌ان‌اس را وارد کنید:</label>
+    <input type="number" id="dns-count" value="5" min="1">
+    
+    <button id="generate-btn">تولید دی‌ان‌اس</button>
+    <button id="copy-btn">کپی به کلیپ‌بورد</button>
+    
+    <h2>کدهای تولید شده:</h2>
+    <pre id="output"></pre>
+
+    <script>
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            const simType = document.getElementById('sim-type').value;
+            const powerLevel = document.getElementById('power-level').value;
+            const count = document.getElementById('dns-count').value;
+            const output = document.getElementById('output');
+            output.textContent = '';
+
+            for (let i = 0; i < count; i++) {
+                // تولید آدرس IP تصادفی
+                const dns = `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)} (Power: ${powerLevel})`;
+                output.textContent += dns + '\n';
+            }
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const output = document.getElementById('output').textContent;
+            if (output.trim() === '') {
+                alert('لطفا ابتدا کدهای دی‌ان‌اس را تولید کنید!');
+            } else {
+                navigator.clipboard.writeText(output).then(() => {
+                    alert('کدهای دی‌ان‌اس به کلیپ‌بورد کپی شد!');
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
